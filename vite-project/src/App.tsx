@@ -5,6 +5,7 @@ import Home from './components/Home'
 import Login from './components/Login'
 import Tester from './components/Tester'
 import Subscribe from './components/Subscribe'
+import LoginDashboard from './components/LoginDashboard'
 
 /*
 type AttrProps = {
@@ -22,6 +23,7 @@ const App: React.FC = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/tester' element={<Tester />} />
         <Route path='/subscribe' element={<Subscribe />} />
+        <Route path='/logindashboard' element={<LoginDashboard />} />
       </Routes>
     </div>
   )

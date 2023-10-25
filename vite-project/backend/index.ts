@@ -6,6 +6,7 @@ const PORT = 5000;
 const app = express();
 
 const verifyUser = require('./routes/allMembers');
+const userStatus = require('./routes/statusLogin');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -22,6 +23,7 @@ app.use(function(req: Request, res: Response, next: NextFunction) {
 });
 
 app.use('/api/login', verifyUser);
+app.use('/api/loginDashboard', userStatus);
 
 app.listen(PORT, (): void => {
   console.log(`[+] Server is running on port: ${PORT} !`)

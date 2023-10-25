@@ -1,7 +1,9 @@
-
 const Subscribe = () => {
   return (
-    <div>Subscribe</div>
+    <main>
+      <p>Subscribe</p>
+      <a href='/login'>Login</a>   
+    </main>
   )
 }
 

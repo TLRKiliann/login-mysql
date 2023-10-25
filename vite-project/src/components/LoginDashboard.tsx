@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+//import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import authLogin from '../services/authLogin'
-import AuthenticationService from '../services/authentication-service'
-import Cookies from 'universal-cookie'
-//import { useCookies } from 'react-cookie'
+//import AuthenticationService from '../services/authentication-service'
+//import Cookies from 'universal-cookie'
 import './styles/_Login.scss'
 
 type Field = {
@@ -23,12 +23,11 @@ type VerifyProps = {
   password: string;
 }[]
 
-const Login:React.FC = () => {
 
-  const cookies = new Cookies();
-  //const [cookies, setCookies] = useCookies<string[]>(['cookie'])
+export default function LoginDashboard() {
 
-  const Navigate = useNavigate()
+  //const cookies = new Cookies();
+  //const Navigate = useNavigate()
   
   const [form, setForm] = useState<Form>({
     username: {value: ''},
@@ -78,7 +77,6 @@ const Login:React.FC = () => {
       .loginRequest()
       .then(data => {
         setDatas(data)
-        //setCookies('cookie', 'mycookie', { httpOnly: true });
       })
       .catch((err) => {
         console.log("Error during catching of login data !", err.message)
@@ -97,7 +95,24 @@ const Login:React.FC = () => {
     
       const verifyUsername = datas?.find((u) => u.username === form.username.value);
       const verifyPassword = datas?.find((u) => u.password === form.password.value);
-
+      
+      if (verifyUsername === undefined || verifyPassword === undefined) {
+        setMessage('🔐  Identifiant ou mot de passe incorrect.')
+      } else {
+        const userStatus = {
+          username: verifyUsername.username,
+          password: verifyPassword.password
+        } 
+        authLogin
+          .statusRequest(userStatus)
+          .then(data => console.log(data)) //{
+          //setDatas(data)
+          .catch((err) => {
+            console.log("Error during catching of login data !", err.message)
+            setDatas([])
+        })
+      }
+      /*
       if (verifyUsername === undefined || verifyPassword === undefined) {
         setMessage('🔐  Identifiant ou mot de passe incorrect.')
       } else {
@@ -119,6 +134,7 @@ const Login:React.FC = () => {
           }
         }) 
       }
+      */
     }
   }
 
@@ -205,6 +221,3 @@ const Login:React.FC = () => {
     </main>
   )
 }
-
-export default Login;
-
