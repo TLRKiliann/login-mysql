@@ -1,0 +1,68 @@
+@use 'src/styles/mixin' as *;
+@use 'src/styles/colors' as *;
+
+//sass with placeholder
+%placeholder-custom {
+    color: $aqua;
+}
+
+main {
+    .login--container {
+        .login--form {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+
+            width: 400px;
+            height: auto;
+
+            @include format($dark--333, 7% auto, 20px 30px, 7px);
+            box-shadow: 0px 0px 7px $aqua;
+            .login--label {
+                color: #00ffff;
+            }
+            .input--custom {
+                @include format($dark--222, 5px 0px, 7px 10px, 3px);
+                border: none;
+                outline: none;
+                margin-bottom: 10px;
+                @extend %placeholder-custom;
+            }
+            button {
+                border: 1px solid transparent;
+                border-radius: 8px;
+
+                margin-top: 10px;
+                padding: 0.6em 1.2em;
+                
+                font-size: 1em;
+                font-weight: 600;
+                font-family: inherit;
+                
+                background-color: $dark--222;
+                cursor: pointer;
+                transition: border-color 0.25s;
+                color: $aqua;
+                &:hover {
+                    border-color: #646cff;
+                }
+                &:focus-visible {
+                    outline: 4px auto -webkit-focus-ring-color;
+                }
+            }
+            .loginError {
+                background: $salmon;
+
+                text-align: center;
+                font-weight: 600;
+                
+                padding: 10px 20px;
+            }
+            legend {
+                margin: auto 0px;
+                margin-bottom: 10px;
+                color: $salmon;
+            }
+        }
+    }
+}
