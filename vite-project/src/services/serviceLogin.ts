@@ -34,9 +34,9 @@ const statusRequest = (userStatus: StatusProps) => {
     }
 }
 
-const functionToCall = {
+const serviceLogin = {
     loginRequest,
     statusRequest
 };
   
-export default functionToCall;
+export default serviceLogin;

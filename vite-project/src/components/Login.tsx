@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import authLogin from '../services/authLogin'
+import serviceLogin from '../services/serviceLogin'
 import AuthenticationService from '../services/authentication-service'
 import Cookies from 'universal-cookie'
 import './styles/_Login.scss'
@@ -72,7 +72,7 @@ const Login:React.FC = () => {
 
   useEffect(() => {
     const callFn = () => {
-      authLogin
+      serviceLogin
       .loginRequest()
       .then(data => {
         setDatas(data)

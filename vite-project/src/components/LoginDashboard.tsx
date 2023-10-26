@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import AuthenticationService from '../services/authentication-service'
-import authLogin from '../services/authLogin'
+import serviceLogin from '../services/serviceLogin'
 import Cookies from 'universal-cookie'
 import './styles/_Login.scss'
 
@@ -73,7 +73,7 @@ export default function LoginDashboard() {
 
   useEffect(() => {
     const callFn = () => {
-      authLogin
+      serviceLogin
         .loginRequest()
         .then(data => {
           setDatas(data)

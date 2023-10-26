@@ -6,13 +6,16 @@ login with mariadb - typescript - authentication - cookie - localstorage
 
 **FR**
 
-Ce projet consiste en un système de login avec authentication en typescript en utilisant les éléments du DOM.
+Ce projet est divisé en backend et frontend.
+
+Ce projet a pour objectif d'appréhender le login avec authentication en typescript en utilisant les éléments du DOM. Le fichier test LoginTester.tsx sert à tester le form avec react-hook-form.
+
 J'ai également utilisé une base de données avec mariadb en remote (LAN).
-J'ai préféré m'axer sur les échanges de requêtes entre axios et express, je ne me suis donc pas servi de useContext() et des privateRoutes.
+J'ai préféré m'axer sur les échanges de requêtes entre axios et le backend (node + express), je ne me suis donc pas servi de useContext() pour le provider des children et des privateRoutes avec token, etc.
 
-Assurez-vous de sécuriser les connexions entre votre machine cliente et votre serveur avec ssh (chiffrement asymétrique), ainsi qu'avec UFW ou iptables pour les ports ssh et mysql.
+Assurez-vous de sécuriser les connexions entre votre machine cliente et votre serveur avec ssh (chiffrement asymétrique), ainsi qu'avec le firewall UFW ou iptables pour les ports ssh et mysql.
 
-Dans ce projet, j'ai utilisé pour le backend :
+Pour le backend :
 - node
 - express
 - dotenv
@@ -24,17 +27,23 @@ Pour le front :
 - axios
 - react-router-dom
 - typescript
-- une classe authentication avec constante et fonction en static
+- une classe authentication (src/service/authentication-service).
+- un fichier service pour la transmission des requêtes avec axios (src/service/serviceLogin.ts). 
 
 ---
 
 **EN**
 
-Perform a login with cookie (with parameters), localStorage and authentication (username and passord) with mariadb in remote (LAN).
+This project is divided into backend and frontend.
 
-Make sure to secure connections between your client machine and your server with ssh (asymmetric encryption), as well as with UFW or iptables for ssh and mysql ports.
+The aim of this project is to understand login with authentication in typescript, using DOM elements. The LoginTester.tsx test file is used to test the form with react-hook-form.
 
-To do this project, I've used :
+I also used a database with mariadb in remote mode (LAN).
+I preferred to focus on the exchange of requests between axios and the backend (node + express), so I didn't use useContext() for the provider of children and privateRoutes with token, etc. I used a test file called LoginTester.tsx to test the form.
+
+Make sure you secure connections between your client machine and your server with ssh (asymmetric encryption), as well as with the UFW firewall or iptables for ssh and mysql ports.
+
+For the backend :
 - node
 - express
 - dotenv
@@ -46,7 +55,8 @@ For the front :
 - axios
 - react-router-dom
 - typescript
-- an authentication class with constant and function in static
+- an authentication class (src/service/authentication-service).
+- a service file for transmitting requests to axios (src/service/serviceLogin.ts).
 
 ## Run
 
@@ -60,7 +70,7 @@ $ cd backend
 
 $ pnpm install
 
-create .env and .gitignore files.
+create .env + .gitignore + environment.d.ts
 
 (.env)
 
@@ -77,6 +87,25 @@ DB_DATABASE: "name_of_table"
 (.gitignore)
 
 `/.env`
+
+(environment.d.ts)
+
+```
+declare global {
+    namespace NodeJS {
+      interface ProcessEnv {
+        DB_HOST: string;
+        DB_PORT?: number | undefined;
+        DB_USER: string;
+        DB_PWD: string;
+        DB_DATABASE: string;
+        DB_LIMIT?: number | undefined;
+      }
+    }
+}
+
+export {}
+```
 
 ## Secure against XSS attacks (cookie & HTTP-only=true for server + HTTPS)
 
