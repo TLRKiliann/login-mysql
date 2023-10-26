@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-//import { Link, useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import AuthenticationService from '../services/authentication-service'
 import authLogin from '../services/authLogin'
-//import AuthenticationService from '../services/authentication-service'
-//import Cookies from 'universal-cookie'
+import Cookies from 'universal-cookie'
 import './styles/_Login.scss'
 
 type Field = {
@@ -21,13 +20,14 @@ type VerifyProps = {
   id: number;
   username: string;
   password: string;
+  status: string | undefined;
 }[]
 
 
 export default function LoginDashboard() {
 
-  //const cookies = new Cookies();
-  //const Navigate = useNavigate()
+  const cookies = new Cookies();
+  const Navigate = useNavigate()
   
   const [form, setForm] = useState<Form>({
     username: {value: ''},
@@ -74,14 +74,14 @@ export default function LoginDashboard() {
   useEffect(() => {
     const callFn = () => {
       authLogin
-      .loginRequest()
-      .then(data => {
-        setDatas(data)
-      })
-      .catch((err) => {
-        console.log("Error during catching of login data !", err.message)
-        setDatas([])
-      })
+        .loginRequest()
+        .then(data => {
+          setDatas(data)
+        })
+        .catch((err) => {
+          console.log("Error during catching of login data !", err.message)
+          setDatas([])
+        })
     }
     callFn();
     return () => console.log("useEffect !!!")
@@ -95,46 +95,31 @@ export default function LoginDashboard() {
     
       const verifyUsername = datas?.find((u) => u.username === form.username.value);
       const verifyPassword = datas?.find((u) => u.password === form.password.value);
-      
+
       if (verifyUsername === undefined || verifyPassword === undefined) {
         setMessage('🔐  Identifiant ou mot de passe incorrect.')
       } else {
-        const userStatus = {
-          username: verifyUsername.username,
-          password: verifyPassword.password
-        } 
-        authLogin
-          .statusRequest(userStatus)
-          .then(data => console.log(data)) //{
-          //setDatas(data)
-          .catch((err) => {
-            console.log("Error during catching of login data !", err.message)
-            setDatas([])
-        })
-      }
-      /*
-      if (verifyUsername === undefined || verifyPassword === undefined) {
-        setMessage('🔐  Identifiant ou mot de passe incorrect.')
-      } else {
+
+        //verifyUsername.status === 'admin' ? verifyUsername.status : undefined
         AuthenticationService
-        .login(form.username.value, form.password.value, verifyUsername.username, 
-          verifyPassword.password)
-        .then(isAuthenticated => {
-          if (!isAuthenticated) {
-            setMessage('🔐  Identifiant ou mot de passe incorrect.')
-            return
-          } else {
-            console.log("login ok")
-            localStorage.setItem("user-info",
-            JSON.stringify([form.username.value, form.password.value]))
-            cookies.set("user-cookie", verifyUsername.username,
-              { path: '/', sameSite: "strict", secure: true, httpOnly: true });
-            console.log(cookies.get("user-cookie"));
-            Navigate('/')
-          }
-        }) 
+          .login(form.username.value, form.password.value, verifyUsername.username, 
+            verifyPassword.password, verifyUsername.status)
+          .then(isAuthenticated => {
+            if (!isAuthenticated) {
+              setMessage("🔐  Vous n'êtes pas admin !")
+            } else {
+              console.log("succeed")
+              Navigate('/succeed')
+             localStorage.setItem("admin-info",
+                JSON.stringify([form.username.value, form.password.value]))
+              cookies.set("admin-cookie", "admin",
+                { path: '/', sameSite: "strict", secure: true });
+              //console.log(cookies.get("user-cookie"));
+              Navigate('/succeed')
+            }
+          })
+        
       }
-      */
     }
   }
 
@@ -148,7 +133,7 @@ export default function LoginDashboard() {
           className="login--form"
           placeholder="lastname"
         >
-          <h1 className="title--framelogin">Login</h1>
+          <h1 className="title--framelogin">Login Dashboard</h1>
 
           {message && <div className="form-group">
             <div className="error--message">
@@ -212,7 +197,7 @@ export default function LoginDashboard() {
         <p>LAS DATAS :</p> 
         {datas?.map((u) => (
           <span key={u.username}>
-            <p>{u.username} - {u.password}</p>
+            <p>{u.username} - {u.password} - {u.status}</p>
           </span>
         ))}
 

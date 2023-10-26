@@ -6,11 +6,13 @@ login with mariadb - typescript - authentication - cookie - localstorage
 
 **FR**
 
-Réaliser un login avec cookie (avec paramètres), localStorage et authentication (username et passord) avec mariadb en remote (LAN).
+Ce projet consiste en un système de login avec authentication en typescript en utilisant les éléments du DOM.
+J'ai également utilisé une base de données avec mariadb en remote (LAN).
+J'ai préféré m'axer sur les échanges de requêtes entre axios et express, je ne me suis donc pas servi de useContext() et des privateRoutes.
 
 Assurez-vous de sécuriser les connexions entre votre machine cliente et votre serveur avec ssh (chiffrement asymétrique), ainsi qu'avec UFW ou iptables pour les ports ssh et mysql.
 
-Pour ce faire, j'ai utiliser pour le backend :
+Dans ce projet, j'ai utilisé pour le backend :
 - node
 - express
 - dotenv
@@ -32,7 +34,7 @@ Perform a login with cookie (with parameters), localStorage and authentication (
 
 Make sure to secure connections between your client machine and your server with ssh (asymmetric encryption), as well as with UFW or iptables for ssh and mysql ports.
 
-To do this, I've used :
+To do this project, I've used :
 - node
 - express
 - dotenv

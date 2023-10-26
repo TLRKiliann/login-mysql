@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import authLogin from '../services/authLogin'
 import AuthenticationService from '../services/authentication-service'
 import Cookies from 'universal-cookie'
-//import { useCookies } from 'react-cookie'
 import './styles/_Login.scss'
 
 type Field = {
@@ -21,13 +20,12 @@ type VerifyProps = {
   id: number;
   username: string;
   password: string;
+  status: string | undefined;
 }[]
 
 const Login:React.FC = () => {
 
   const cookies = new Cookies();
-  //const [cookies, setCookies] = useCookies<string[]>(['cookie'])
-
   const Navigate = useNavigate()
   
   const [form, setForm] = useState<Form>({
@@ -78,7 +76,6 @@ const Login:React.FC = () => {
       .loginRequest()
       .then(data => {
         setDatas(data)
-        //setCookies('cookie', 'mycookie', { httpOnly: true });
       })
       .catch((err) => {
         console.log("Error during catching of login data !", err.message)
@@ -97,13 +94,14 @@ const Login:React.FC = () => {
     
       const verifyUsername = datas?.find((u) => u.username === form.username.value);
       const verifyPassword = datas?.find((u) => u.password === form.password.value);
+      const verifyStatus = datas?.find((u) => u.status === "admin");
 
       if (verifyUsername === undefined || verifyPassword === undefined) {
         setMessage('🔐  Identifiant ou mot de passe incorrect.')
       } else {
         AuthenticationService
         .login(form.username.value, form.password.value, verifyUsername.username, 
-          verifyPassword.password)
+          verifyPassword.password, verifyStatus?.status)
         .then(isAuthenticated => {
           if (!isAuthenticated) {
             setMessage('🔐  Identifiant ou mot de passe incorrect.')
@@ -113,9 +111,9 @@ const Login:React.FC = () => {
             localStorage.setItem("user-info",
             JSON.stringify([form.username.value, form.password.value]))
             cookies.set("user-cookie", verifyUsername.username,
-              { path: '/', sameSite: "strict", secure: true, httpOnly: true });
+              { path: '/', sameSite: "strict", secure: true });
             console.log(cookies.get("user-cookie"));
-            Navigate('/')
+            Navigate('/succeed')
           }
         }) 
       }
@@ -196,7 +194,7 @@ const Login:React.FC = () => {
         <p>LAS DATAS :</p> 
         {datas?.map((u) => (
           <span key={u.username}>
-            <p>{u.username} - {u.password}</p>
+            <p>{u.username} - {u.password} - {u.status}</p>
           </span>
         ))}
 

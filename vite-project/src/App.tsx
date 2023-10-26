@@ -6,6 +6,7 @@ import Login from './components/Login'
 import Tester from './components/Tester'
 import Subscribe from './components/Subscribe'
 import LoginDashboard from './components/LoginDashboard'
+import Succeed from './components/Succeed'
 
 /*
 type AttrProps = {
@@ -21,6 +22,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/succeed' element={<Succeed />} />
         <Route path='/tester' element={<Tester />} />
         <Route path='/subscribe' element={<Subscribe />} />
         <Route path='/logindashboard' element={<LoginDashboard />} />
