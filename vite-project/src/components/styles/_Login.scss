@@ -12,57 +12,103 @@ main {
             position: relative;
             display: flex;
             flex-direction: column;
-
             width: 400px;
             height: auto;
-
-            @include format($dark--333, 7% auto, 20px 30px, 7px);
+            /*rgb(16, 58, 113)*/
+            @include format(rgba(16, 58, 113, 0.5), 7% auto, 20px 30px, 20px);
             box-shadow: 0px 0px 7px $aqua;
+            .form--title {
+                margin: auto 0px;
+                text-align: center;
+            }
+            .div--msg {
+                margin: auto 0px;
+                .connection--msg {
+                    color: #ffa500;
+                }
+            }
             .login--label {
                 color: #00ffff;
             }
             .input--custom {
-                @include format($dark--222, 5px 0px, 7px 10px, 3px);
+                @include format(rgba(0, 0, 100, 0.5), 5px 0px, 7px 10px, 3px);
+                font-size: 1.1rem;
+                font-weight: 600;
                 border: none;
                 outline: none;
-                margin-bottom: 10px;
                 @extend %placeholder-custom;
+                margin-bottom: 10px;
+                padding: 10px;
+            }
+            .error {
+                text-align: justify;
+                font-size: 14px;
+                color: #ffa500;
             }
             button {
                 border: 1px solid transparent;
                 border-radius: 8px;
 
-                margin-top: 10px;
-                padding: 0.6em 1.2em;
+                margin: 20px 0px;
+                padding: 12px 0px;
                 
                 font-size: 1em;
                 font-weight: 600;
                 font-family: inherit;
                 
-                background-color: $dark--222;
+                background: rgba(0, 0, 100, 0.8);
                 cursor: pointer;
-                transition: border-color 0.25s;
+                box-shadow: 0px 0px 7px $aqua;
+
+                transition: border-color 0.25s, color 0.25s,;
                 color: $aqua;
                 &:hover {
+                    background: rgba(0, 0, 100, 0.5);
                     border-color: #646cff;
+                    color: #289acb;
+                }
+                &:active {
+                    background: rgba(0, 100, 255, 0.1);
+                    border-color: none;
+                    box-shadow: 0px 0px 0px $aqua;
+                    color: $aqua;
+                    transform: scale(0.95);
                 }
                 &:focus-visible {
                     outline: 4px auto -webkit-focus-ring-color;
                 }
             }
-            .loginError {
-                background: $salmon;
-
-                text-align: center;
-                font-weight: 600;
-                
-                padding: 10px 20px;
+            .form--link {
+                margin-top: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background-color: rgba(0, 0, 100, 0.2);
+                border-radius: 7px;
+                box-shadow: 0px 0px 4px $aqua;
+                .form--subscribe {
+                    margin: 10px 20px;
+                    .link--subscribe {
+                        text-decoration: none;
+                        color: $aqua;
+                        &:hover {
+                            color: #ffa500;
+                        }
+                    }
+                }
             }
-            legend {
-                margin: auto 0px;
-                margin-bottom: 10px;
-                color: $salmon;
-            }
+        }
+    }
+    .database {
+        position: absolute;
+        top: 5%;
+        width: auto;
+        background-color: rgb(16, 58, 113);
+        border: 1px solid #ffa500;
+        color: $aqua;
+        padding: 10px;
+        p {
+            font-weight: 600;
         }
     }
 }

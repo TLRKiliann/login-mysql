@@ -35,7 +35,7 @@ export default function LoginDashboard() {
   })
 
   const [datas, setDatas] = useState<VerifyProps>([])
-  const [message, setMessage] = useState<string>('Not connected!')
+  const [message, setMessage] = useState<string>('Not connected !')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const fieldName: string = e.target.name
@@ -133,12 +133,12 @@ export default function LoginDashboard() {
           className="login--form"
           placeholder="lastname"
         >
-          <h1 className="title--framelogin">Login Dashboard</h1>
+          <h1 className="form--title">Access Dashboard</h1>
 
-          {message && <div className="form-group">
-            <div className="error--message">
+          {message && <div className="div--msg">
+            <p className="connection--msg">
               {message}
-            </div>
+            </p>
           </div>
           }
 
@@ -180,26 +180,38 @@ export default function LoginDashboard() {
           } 
           
           <button type="submit" className="btn--submitlogin">
-            Enter
+            Login
           </button>
           
-          <p className="p--loginframe">
-            <Link
-              to="/subscribe"
-              className="link--subscribe"
-            >
-              Subscribe
-            </Link>
-          </p>
+          <div className='form--link'>
+            <p className="form--subscribe">
+              <Link
+                to="/subscribe"
+                className="link--subscribe"
+              >
+                Subscribe
+              </Link>
+            </p>
+            <p className="form--subscribe">
+              <Link
+                to="/"
+                className="link--subscribe"
+              >
+                Home
+              </Link>
+            </p>
+          </div>
 
         </form>
 
-        <p>LAS DATAS :</p> 
-        {datas?.map((u) => (
-          <span key={u.username}>
-            <p>{u.username} - {u.password} - {u.status}</p>
-          </span>
-        ))}
+        <div className='database'>
+          <p>Database :</p> 
+            {datas?.map((u) => (
+              <span key={u.username}>
+                <p>{u.username} - {u.password} - {u.status}</p>
+              </span>
+            ))}
+        </div>
 
       </div>
 

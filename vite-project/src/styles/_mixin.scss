@@ -13,7 +13,7 @@
 }
 
 @mixin format($bgcolor, $margin, $padding, $b-radius) {
-    background-color: $bgcolor;
+    background: $bgcolor;
     margin: $margin;
     padding: $padding;
     border-radius: $b-radius;

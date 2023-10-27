@@ -11,13 +11,5 @@ body {
   padding: 0;
   font-family: 'Domine Variable', sans-serif;
   box-sizing: border-box;
-
-  header {
-    @include position(absolute, top);
-    height: 75px;
-  }
-
-  footer {
-    @include position(fixed, bottom);
-  }
+  height: 100vh;
 }
