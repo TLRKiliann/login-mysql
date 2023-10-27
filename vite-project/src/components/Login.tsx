@@ -3,7 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import serviceLogin from '../services/serviceLogin'
 import AuthenticationService from '../services/authentication-service'
 import Cookies from 'universal-cookie'
-import './styles/_Login.scss'
+import ConsoleDb from './subcomponents/ConsoleDb'
+//import './styles/_Login.scss'
+
 
 type Field = {
   value?: any
@@ -121,7 +123,7 @@ const Login:React.FC = () => {
   }
 
   return(
-    <main className="bg--loginimg">
+    <main className="login--main">
 
       <div className="login--container">
         
@@ -201,14 +203,7 @@ const Login:React.FC = () => {
 
         </form>
 
-        <div className='database'>
-          <p>Database :</p> 
-            {datas?.map((u) => (
-              <span key={u.username}>
-                <p>{u.username} - {u.password} - {u.status}</p>
-              </span>
-            ))}
-        </div>
+        <ConsoleDb datas={datas} />
 
       </div>
 

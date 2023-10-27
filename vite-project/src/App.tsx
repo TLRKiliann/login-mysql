@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom'
 //import LoginTester from './components/LoginTester'
 import Home from './components/Home'
 import Login from './components/Login'
-import Tester from './components/Tester'
 import Subscribe from './components/Subscribe'
 import LoginDashboard from './components/LoginDashboard'
 import Succeed from './components/Succeed'
@@ -23,7 +22,6 @@ const App: React.FC = () => {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/succeed' element={<Succeed />} />
-        <Route path='/tester' element={<Tester />} />
         <Route path='/subscribe' element={<Subscribe />} />
         <Route path='/logindashboard' element={<LoginDashboard />} />
       </Routes>

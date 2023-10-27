@@ -1,9 +1,15 @@
+//import './styles/_Home.scss';
+
 const Home = () => {
   return (
-    <main>
+    <main className="home--main">
       <p>Welcome Home !</p>
-      <p><a href='/login'>Login</a></p>
-      <p><a href='/logindashboard'>Dashboard</a></p> 
+      <p className="home--paragraph">
+        <a href='/login'>👉 &nbsp;Login</a>
+      </p>
+      <p className="home--paragraph">
+        <a href='/logindashboard'>👉 &nbsp;Dashboard</a>
+      </p> 
     </main>
   )
 }

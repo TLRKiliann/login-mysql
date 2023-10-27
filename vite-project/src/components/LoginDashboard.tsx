@@ -3,7 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import AuthenticationService from '../services/authentication-service'
 import serviceLogin from '../services/serviceLogin'
 import Cookies from 'universal-cookie'
-import './styles/_Login.scss'
+import ConsoleDb from './subcomponents/ConsoleDb'
+//import './styles/_Login.scss'
+import userIcon from '/images/user_icon.jpg'
+
 
 type Field = {
   value?: any
@@ -124,8 +127,8 @@ export default function LoginDashboard() {
   }
 
   return(
-    <main className="bg--loginimg">
-
+    <main className="login--main">
+      
       <div className="login--container">
         
         <form
@@ -133,7 +136,12 @@ export default function LoginDashboard() {
           className="login--form"
           placeholder="lastname"
         >
-          <h1 className="form--title">Access Dashboard</h1>
+          <div className='form--divimg'>
+            <span>
+              <img src={userIcon} width="100%" height="100%" alt="user-icon" />
+            </span>
+            <h1 className="form--title">Access Dashboard</h1>
+          </div>
 
           {message && <div className="div--msg">
             <p className="connection--msg">
@@ -204,14 +212,7 @@ export default function LoginDashboard() {
 
         </form>
 
-        <div className='database'>
-          <p>Database :</p> 
-            {datas?.map((u) => (
-              <span key={u.username}>
-                <p>{u.username} - {u.password} - {u.status}</p>
-              </span>
-            ))}
-        </div>
+        <ConsoleDb datas={datas} />
 
       </div>
 

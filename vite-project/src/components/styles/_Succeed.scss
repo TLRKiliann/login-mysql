@@ -1,0 +1,13 @@
+@use 'src/styles/colors' as *;
+
+.succeed--main {
+    padding: 20px 30px;
+    .succeed--paragraph {
+        a {
+            text-decoration: none;
+            &:hover {
+                color: $light--blue;
+            }
+        }
+    }
+}

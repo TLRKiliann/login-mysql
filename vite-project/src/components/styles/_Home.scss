@@ -1,0 +1,13 @@
+@use 'src/styles/colors' as *;
+
+.home--main {
+    padding: 20px 30px;
+    .home--paragraph {
+        a {
+            text-decoration: none;
+            &:hover {
+                color: $light--blue;
+            }
+        }
+    }
+}

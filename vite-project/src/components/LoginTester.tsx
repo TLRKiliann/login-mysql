@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form"
-import '../App.scss'
 
 type FormData = {
     username: string;

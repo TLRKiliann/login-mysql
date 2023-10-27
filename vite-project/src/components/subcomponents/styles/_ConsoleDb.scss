@@ -1,0 +1,18 @@
+@use 'src/styles/colors' as *;
+
+.database {
+    position: absolute;
+    top: 5%;
+    left: 3%;
+    width: auto;
+    background-color: $dark--00;
+    border-radius: 7px;;
+    color: $lightgreen;
+    padding: 20px;
+    h4 {
+        color: $aqua;
+    }
+    p {
+        font-size: 0.9rem;
+    }
+}
