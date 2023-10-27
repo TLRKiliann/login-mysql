@@ -3,7 +3,7 @@ import express, {Request, Response, NextFunction} from 'express';
 const router = express.Router();
 const pool = require('../dbConnection.ts');
 
-// post
+// post to authenticate admin
 router.post('/', async(req: Request, res: Response, next: NextFunction) => {
   const pseudo: string = req.body.username;
   const password: string = req.body.password;

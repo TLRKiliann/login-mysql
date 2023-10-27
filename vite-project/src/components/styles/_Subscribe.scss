@@ -1,0 +1,13 @@
+@use 'src/styles/colors' as *;
+
+.subscribe--main {
+    padding: 20px 30px;
+    .subscribe--paragraph {
+        a {
+            text-decoration: none;
+            &:hover {
+                color: $light--blue;
+            }
+        }
+    }
+}

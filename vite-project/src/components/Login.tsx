@@ -4,8 +4,6 @@ import serviceLogin from '../services/serviceLogin'
 import AuthenticationService from '../services/authentication-service'
 import Cookies from 'universal-cookie'
 import ConsoleDb from './subcomponents/ConsoleDb'
-//import './styles/_Login.scss'
-
 
 type Field = {
   value?: any

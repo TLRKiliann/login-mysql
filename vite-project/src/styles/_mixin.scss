@@ -1,18 +1,7 @@
 @use 'src/styles/colors' as *;
 
-@mixin position($position, $top-or-bottom) {
-    position: $position;
-    #{$top-or-bottom}: 0px;
-    right: 0px;
-    left: 0px;
-    display: flex;
-    justify-content: center;
-    background: $dark--20;
-    box-shadow: 0px 0px 10px $aqua;
-    color: $aqua;
-}
 
-@mixin format($bgcolor, $margin, $padding, $b-radius) {
+@mixin bgMargPadBdRad($bgcolor, $margin, $padding, $b-radius) {
     background: $bgcolor;
     margin: $margin;
     padding: $padding;

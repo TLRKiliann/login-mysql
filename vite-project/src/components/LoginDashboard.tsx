@@ -4,9 +4,7 @@ import AuthenticationService from '../services/authentication-service'
 import serviceLogin from '../services/serviceLogin'
 import Cookies from 'universal-cookie'
 import ConsoleDb from './subcomponents/ConsoleDb'
-//import './styles/_Login.scss'
 import userIcon from '/images/user_icon.jpg'
-
 
 type Field = {
   value?: any

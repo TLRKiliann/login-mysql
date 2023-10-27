@@ -1,8 +1,8 @@
 const Subscribe = () => {
   return (
-    <main>
-      <p>Subscribe</p>
-      <a href='/login'>Login</a>   
+    <main className="subscribe--main">
+        <p>Subscribe Page...</p>
+        <p className="subscribe--paragraph"><a href='/'>Home</a></p>
     </main>
   )
 }
