@@ -18,3 +18,28 @@
     padding: $padding;
     border-radius: $b-radius;
 }
+
+@mixin flexAlignJustify($justify) {
+    display: flex;
+    align-items: center;
+    justify-content: $justify;
+}
+
+@mixin fontMarginPad($fontSize, $fontWeight, $bd, $margin, $px, $padding) {
+    font-size: $fontSize;
+    font-weight: $fontWeight;
+    border: $bd;
+    #{$margin}: $px;
+    padding: $padding;
+}
+
+@mixin widthHeight($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin bgBorderBoxShadow($bg, $bd-radius, $box-shadow) {
+    background-color: $bg;
+    border-radius: $bd-radius;
+    box-shadow: $box-shadow;
+}
