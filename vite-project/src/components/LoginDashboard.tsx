@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react'
-//import { useNavigate } from 'react-router-dom'
-//import AuthenticationService from '../services/authentication-service'
 import serviceLogin from '../services/serviceLogin'
-//import Cookies from 'universal-cookie'
 import ConsoleDb from './subcomponents/ConsoleDb'
 import HomeSubscribe from './subcomponents/HomeSubscribe'
 import UsernameComp from './subcomponents/UsernameComp'
@@ -29,15 +26,13 @@ type VerifyProps = {
 }[]
 
 type VerifyResponse = {
+  id: null;
   username: string;
   password: string;
   status: string;
 }
 
 export default function LoginDashboard() {
-
-  //const cookies = new Cookies();
-  //const Navigate = useNavigate()
   
   const [form, setForm] = useState<Form>({
     username: {value: ''},
@@ -46,7 +41,7 @@ export default function LoginDashboard() {
 
   const [datas, setDatas] = useState<VerifyProps>([])
   const [message, setMessage] = useState<string>('Not connected !')
-  const [response, setResponse] = useState<VerifyResponse | null>(null)
+  const [response, setResponse] = useState<VerifyResponse[] | null>([])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const fieldName: string = e.target.name
@@ -91,7 +86,7 @@ export default function LoginDashboard() {
         })
         .catch((err) => {
           console.log("Error during catching of login data !", err.message)
-          setDatas([])
+          setMessage(err.message)
         })
     }
     callFn();
@@ -105,6 +100,7 @@ export default function LoginDashboard() {
       setMessage('👉  Tentative de connexion en cours ...')
       
       const statusData: VerifyResponse = {
+        id: null,
         username: form.username.value,
         password: form.password.value,
         status: ""
@@ -113,51 +109,13 @@ export default function LoginDashboard() {
         .statusRequest(statusData)
         .then((data) => {
           setResponse(data)
-          //console.log(data, "data");
+          setMessage("Welcome ADMIN !")
         })
         .catch((err) => {
           console.log("Error during catching of login data !", err.message);
+          //setMessage('🔐' + " " + err.message)
+          setMessage('🔐  Identifiant ou mot de passe incorrect.')
         })
-
-      //const verifyUsername = datas?.find((u) => u.username === form.username.value);
-      //const verifyPassword = datas?.find((u) => u.password === form.password.value);
-      /*
-      if (verifyUsername === undefined || verifyPassword === undefined) {
-        setMessage('🔐  Identifiant ou mot de passe incorrect.')
-      } else {
-        if (response.status !== "admin") {
-          setMessage("🔐  Vous n'êtes pas admin !")
-        } else {
-          console.log("succeed")
-          localStorage.setItem("admin-info",
-            JSON.stringify([form.username.value, form.password.value]))
-          cookies.set("admin-cookie", "admin",
-            { path: '/', sameSite: "strict", secure: true });
-          //console.log(cookies.get("user-cookie"));
-          Navigate('/succeed')
-        }
-        //verifyUsername.status === 'admin' ? verifyUsername.status : undefined
-        AuthenticationService
-          .login(form.username.value, form.password.value, verifyUsername.username, 
-            verifyPassword.password, verifyUsername.status)
-          .then(isAuthenticated => {
-            if (!isAuthenticated) {
-              setMessage("🔐  Vous n'êtes pas admin !")
-            } else {
-              console.log("succeed")
-              Navigate('/succeed')
-             localStorage.setItem("admin-info",
-                JSON.stringify([form.username.value, form.password.value]))
-              cookies.set("admin-cookie", "admin",
-                { path: '/', sameSite: "strict", secure: true });
-              //console.log(cookies.get("user-cookie"));
-              Navigate('/succeed')
-            }
-          })
-        
-        
-      }
-      */
     }
   }
 
@@ -171,10 +129,16 @@ export default function LoginDashboard() {
           className="login--form"
           placeholder="lastname"
         >
-          <VerifyAdmin
-            username={response?.username}
-            status={response?.status}
-          />
+          {response ? (
+            response?.map((u) => (
+              <VerifyAdmin
+                key={u.id}
+                username={u?.username}
+            />
+            ))
+          ) : (
+            null
+          )}
 
           <div className='form--divimg'>
             <span>

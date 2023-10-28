@@ -1,14 +1,33 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Cookies from 'universal-cookie'
+
 type ResponseProps = {
     username: string | undefined;
-    status: string | undefined;
 }
 
 function VerifyAdmin(props: ResponseProps) {
-    if (props.status !== 'admin') {
-        return <p>Halala !!! {props.username} vous n'êtes pas admin.</p>
-    } else {
-        return <p>Yes you are admin !</p>
-    }
+
+    const Navigate = useNavigate()
+    const cookies = new Cookies();
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            localStorage.setItem("admin-info",
+            JSON.stringify([props.username]))
+            cookies.set("admin-cookie", props.username,
+              { path: '/', sameSite: "strict", secure: true });
+            
+            Navigate('/succeed')
+        }, 2000)
+        return () => clearTimeout(timer)
+    }, [])
+
+    //console.log(cookies.get("admin-cookie"));
+
+    return (
+        <p>Ok {props.username} vous êtes admin.</p>
+    )
 }
 
 export default VerifyAdmin
