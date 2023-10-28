@@ -11,11 +11,11 @@ router.post('/', async(req: Request, res: Response, next: NextFunction) => {
   let conn;
   try {
     conn = await pool.getConnection();
-    const result = await conn.query("SELECT * FROM users WHERE username=? password=? status=?",
+    const result = await conn.query("SELECT * FROM users WHERE username=? && password=? && status=?",
       [pseudo, password, status]);
     if (pseudo === "Esteban" && password === 'koala33' && status !== "user") {
       console.log(status, "status ok");
-      res.status(200).json(status);
+      res.status(200).json(result);
     } else {
       res.status(401).end()
     }

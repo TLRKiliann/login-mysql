@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import AuthenticationService from '../services/authentication-service'
+//import { useNavigate } from 'react-router-dom'
+//import AuthenticationService from '../services/authentication-service'
 import serviceLogin from '../services/serviceLogin'
-import Cookies from 'universal-cookie'
+//import Cookies from 'universal-cookie'
 import ConsoleDb from './subcomponents/ConsoleDb'
 import HomeSubscribe from './subcomponents/HomeSubscribe'
 import UsernameComp from './subcomponents/UsernameComp'
 import PasswordComp from './subcomponents/PasswordComp'
+import VerifyAdmin from './subcomponents/VerifyAdmin'
 import userIcon from '/images/user_icon.jpg'
 
 type Field = {
@@ -27,11 +28,16 @@ type VerifyProps = {
   status: string | undefined;
 }[]
 
+type VerifyResponse = {
+  username: string;
+  password: string;
+  status: string;
+}
 
 export default function LoginDashboard() {
 
-  const cookies = new Cookies();
-  const Navigate = useNavigate()
+  //const cookies = new Cookies();
+  //const Navigate = useNavigate()
   
   const [form, setForm] = useState<Form>({
     username: {value: ''},
@@ -40,6 +46,7 @@ export default function LoginDashboard() {
 
   const [datas, setDatas] = useState<VerifyProps>([])
   const [message, setMessage] = useState<string>('Not connected !')
+  const [response, setResponse] = useState<VerifyResponse | null>(null)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const fieldName: string = e.target.name
@@ -64,7 +71,7 @@ export default function LoginDashboard() {
 
     // Validator password
     if (form.password.value.length < 3) {
-      const errorMsg: string = 'Votre mot de passe doit faire au moins 6 caractères de long.'
+      const errorMsg: string = 'Votre mot de passe doit faire au moins 3 caractères de long.'
       const newField: Field = { value: form.password.value, error: errorMsg, isValid: false }
       newForm = { ...newForm, ...{ password: newField } }
     } else {
@@ -91,19 +98,44 @@ export default function LoginDashboard() {
     return () => console.log("useEffect !!!")
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const isFormValid = validateForm()
     if (isFormValid) {
       setMessage('👉  Tentative de connexion en cours ...')
-    
-      const verifyUsername = datas?.find((u) => u.username === form.username.value);
-      const verifyPassword = datas?.find((u) => u.password === form.password.value);
+      
+      const statusData: VerifyResponse = {
+        username: form.username.value,
+        password: form.password.value,
+        status: ""
+      }
+      await serviceLogin
+        .statusRequest(statusData)
+        .then((data) => {
+          setResponse(data)
+          //console.log(data, "data");
+        })
+        .catch((err) => {
+          console.log("Error during catching of login data !", err.message);
+        })
 
+      //const verifyUsername = datas?.find((u) => u.username === form.username.value);
+      //const verifyPassword = datas?.find((u) => u.password === form.password.value);
+      /*
       if (verifyUsername === undefined || verifyPassword === undefined) {
         setMessage('🔐  Identifiant ou mot de passe incorrect.')
       } else {
-
+        if (response.status !== "admin") {
+          setMessage("🔐  Vous n'êtes pas admin !")
+        } else {
+          console.log("succeed")
+          localStorage.setItem("admin-info",
+            JSON.stringify([form.username.value, form.password.value]))
+          cookies.set("admin-cookie", "admin",
+            { path: '/', sameSite: "strict", secure: true });
+          //console.log(cookies.get("user-cookie"));
+          Navigate('/succeed')
+        }
         //verifyUsername.status === 'admin' ? verifyUsername.status : undefined
         AuthenticationService
           .login(form.username.value, form.password.value, verifyUsername.username, 
@@ -123,7 +155,9 @@ export default function LoginDashboard() {
             }
           })
         
+        
       }
+      */
     }
   }
 
@@ -137,6 +171,11 @@ export default function LoginDashboard() {
           className="login--form"
           placeholder="lastname"
         >
+          <VerifyAdmin
+            username={response?.username}
+            status={response?.status}
+          />
+
           <div className='form--divimg'>
             <span>
               <img src={userIcon} width="100%" height="100%" alt="user-icon" />
