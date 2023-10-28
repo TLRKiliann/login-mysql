@@ -26,7 +26,9 @@ function VerifyAdmin(props: ResponseProps) {
     //console.log(cookies.get("admin-cookie"));
 
     return (
-        <p>Ok {props.username} vous êtes admin.</p>
+        <>
+            <p>Ok, you are the admin {props.username}!</p>
+        </>
     )
 }
 

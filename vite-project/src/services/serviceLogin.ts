@@ -2,7 +2,7 @@ import { app } from '../api/axiosconfig'
 
 type StatusProps = {
     username: string;
-    password: string;
+    status: string;
 }
 
 const getLogin: string = "/api/login";

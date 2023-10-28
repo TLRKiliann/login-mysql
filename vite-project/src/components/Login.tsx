@@ -23,7 +23,7 @@ type VerifyProps = {
   id: number;
   username: string;
   password: string;
-  status: string | undefined;
+  status: string;
 }[]
 
 const Login:React.FC = () => {
@@ -97,14 +97,13 @@ const Login:React.FC = () => {
     
       const verifyUsername = datas?.find((u) => u.username === form.username.value);
       const verifyPassword = datas?.find((u) => u.password === form.password.value);
-      const verifyStatus = datas?.find((u) => u.status === "admin");
-
+      
       if (verifyUsername === undefined || verifyPassword === undefined) {
         setMessage('🔐  Identifiant ou mot de passe incorrect.')
       } else {
         AuthenticationService
         .login(form.username.value, form.password.value, verifyUsername.username, 
-          verifyPassword.password, verifyStatus?.status)
+          verifyPassword.password)
         .then(isAuthenticated => {
           if (!isAuthenticated) {
             setMessage('🔐  Identifiant ou mot de passe incorrect.')
@@ -118,7 +117,7 @@ const Login:React.FC = () => {
             console.log(cookies.get("user-cookie"));
             Navigate('/succeed')
           }
-        }) 
+        })
       }
     }
   }

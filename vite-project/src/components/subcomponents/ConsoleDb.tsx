@@ -3,7 +3,7 @@ type DataProps = {
         id: number;
         username: string;
         password: string;
-        status: string | undefined;
+        status: string;
     }[]
 }
 

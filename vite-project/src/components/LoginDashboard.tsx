@@ -6,6 +6,7 @@ import UsernameComp from './subcomponents/UsernameComp'
 import PasswordComp from './subcomponents/PasswordComp'
 import VerifyAdmin from './subcomponents/VerifyAdmin'
 import userIcon from '/images/user_icon.jpg'
+import AuthenticationService from '../services/authentication-service'
 
 type Field = {
   value?: any
@@ -22,13 +23,11 @@ type VerifyProps = {
   id: number;
   username: string;
   password: string;
-  status: string | undefined;
+  status: string;
 }[]
 
 type VerifyResponse = {
-  id: null;
   username: string;
-  password: string;
   status: string;
 }
 
@@ -93,30 +92,43 @@ export default function LoginDashboard() {
     return () => console.log("useEffect !!!")
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const isFormValid = validateForm()
     if (isFormValid) {
-      setMessage('👉  Tentative de connexion en cours ...')
+      setMessage('👉 Tentative de connexion en cours ...')
       
-      const statusData: VerifyResponse = {
-        id: null,
-        username: form.username.value,
-        password: form.password.value,
-        status: ""
+      const verifyUsername = datas?.find((u) => u.username === form.username.value);
+      const verifyPassword = datas?.find((u) => u.password === form.password.value);
+
+      if (verifyUsername === undefined || verifyPassword === undefined) {
+        setMessage('🔐 Identifiant ou mot de passe incorrect.')
+      } else {
+        await AuthenticationService
+        .login(form.username.value, form.password.value, verifyUsername.username, 
+          verifyPassword.password)
+        .then(isAuthenticated => {
+          if (!isAuthenticated) {
+            setMessage('🔐 Identifiant ou mot de passe incorrect.')
+          } else {
+            const statusData: VerifyResponse = {
+              username: form.username.value,
+              status: verifyUsername.status
+            }
+            serviceLogin
+              .statusRequest(statusData)
+              .then((data) => {
+                console.log(data)
+                setResponse(data)
+                setMessage("👋 Welcome ADMIN !")
+              })
+              .catch((err) => {
+                console.log("Error during catching of login data !", err.message);
+                setMessage('🔐 You are not an admin ...')
+              })
+          }
+        })
       }
-      await serviceLogin
-        .statusRequest(statusData)
-        .then((data) => {
-          console.log(data)
-          setResponse(data)
-          setMessage("Welcome ADMIN !")
-        })
-        .catch((err) => {
-          console.log("Error during catching of login data !", err.message);
-          //setMessage('🔐' + " " + err.message)
-          setMessage('🔐  Identifiant ou mot de passe incorrect.')
-        })
     }
   }
 
@@ -133,7 +145,7 @@ export default function LoginDashboard() {
           {response ? (
             response?.map((u) => (
               <VerifyAdmin
-                key={u.id}
+                key={u.username}
                 username={u?.username}
             />
             ))
