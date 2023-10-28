@@ -10,10 +10,10 @@ type DataProps = {
 export default function ConsoleDb(props: DataProps) {
   return (
     <div className='database'>
-        <h4>Data from Database :</h4> 
+        <h4>Database :</h4>
         {props.datas?.map((u) => (
             <span key={u.id}>
-            <p>{u.id} - {u.username} - {u.password} - {u.status}</p>
+                <p>{u.id} - {u.username} - {u.password} - {u.status}</p>
             </span>
         ))}
   </div>

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import AuthenticationService from '../services/authentication-service'
 import serviceLogin from '../services/serviceLogin'
 import Cookies from 'universal-cookie'
 import ConsoleDb from './subcomponents/ConsoleDb'
+import HomeSubscribe from './subcomponents/HomeSubscribe'
+import UsernameComp from './subcomponents/UsernameComp'
+import PasswordComp from './subcomponents/PasswordComp'
 import userIcon from '/images/user_icon.jpg'
 
 type Field = {
@@ -148,65 +151,23 @@ export default function LoginDashboard() {
           </div>
           }
 
-          <label htmlFor="username" className="login--label">
-            Username
-          </label>
-          <input
-            type="text"
-            name="username"
+          <UsernameComp 
             value={form.username.value}
-            onChange={(e) => handleInputChange(e)}
-            placeholder="username"
-            autoComplete="off"
-            className="input--custom"
-            required
+            handleInputChange={(e) => handleInputChange(e)}
+            error={form.username.error}
           />
-          {form.username.error &&
-            <div className="error username"> 
-              {form.username.error} 
-            </div>
-          } 
-          
-          <label htmlFor="password" className="login--label">
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
+
+          <PasswordComp 
             value={form.password.value}
-            onChange={(e) => handleInputChange(e)}
-            placeholder="password"
-            className="input--custom"
-            required
+            handleInputChange={(e) => handleInputChange(e)}
+            error={form.password.error}
           />
-          {form.password.error &&
-            <div className="error password"> 
-              {form.password.error} 
-            </div>
-          } 
           
           <button type="submit" className="btn--submitlogin">
             Login
           </button>
           
-          <div className='form--link'>
-            <p className="form--subscribe">
-              <Link
-                to="/subscribe"
-                className="link--subscribe"
-              >
-                Subscribe
-              </Link>
-            </p>
-            <p className="form--subscribe">
-              <Link
-                to="/"
-                className="link--subscribe"
-              >
-                Home
-              </Link>
-            </p>
-          </div>
+          <HomeSubscribe />
 
         </form>
 

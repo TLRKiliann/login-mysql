@@ -1,0 +1,10 @@
+@use 'src/styles/colors' as *;
+
+.login--label {
+    color: $aqua;
+}
+.error {
+    text-align: justify;
+    font-size: 14px;
+    color: $orange;
+}
