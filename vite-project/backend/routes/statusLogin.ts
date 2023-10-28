@@ -13,7 +13,7 @@ router.post('/', async(req: Request, res: Response, next: NextFunction) => {
     conn = await pool.getConnection();
     const result = await conn.query("SELECT * FROM users WHERE username=? && password=? && status=?",
       [user, password, status]);
-      if (user === "Esteban" && password === 'koala33' && status !== "user") {
+    if (user === "Esteban" && password === 'koala33' && status !== "user") {
       res.status(200).json(result);
     } else {
       res.status(403).end()

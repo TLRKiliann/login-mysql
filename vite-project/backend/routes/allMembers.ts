@@ -14,7 +14,7 @@ router.get('/', async(req: Request, res: Response, next: NextFunction) => {
     throw err;
   } finally {
     if (conn) return conn.end();
-    }
+  }
 });
 
 module.exports = router;
