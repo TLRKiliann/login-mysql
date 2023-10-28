@@ -8,10 +8,11 @@ type StatusProps = {
 const getLogin: string = "/api/login";
 const postStatus: string = "/api/loginDashboard";
 
-const loginRequest = () => {
+const loginRequest = async() => {
     try {
-        const req = app.get(getLogin)
-        return req.then((res) => res.data)
+        const req = await app.get(getLogin)
+        const res = await req.data
+        return res
     } catch (err:any) {
         console.log("Error response post (trbl to send data login)")
         console.log("erd", err?.res.data);
@@ -21,10 +22,11 @@ const loginRequest = () => {
     }
 }
 
-const statusRequest = (userStatus: StatusProps) => {
+const statusRequest = async(userStatus: StatusProps) => {
     try {
-        const req = app.post(postStatus, userStatus)
-        return req.then((res) => res.data)
+        const req = await app.post(postStatus, userStatus)
+        const res = await req.data
+        return res
     } catch (err:any) {
         console.log("Error response post (trbl to send data login)")
         console.log("erd", err?.res.data);

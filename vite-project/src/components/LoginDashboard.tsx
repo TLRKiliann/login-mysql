@@ -78,8 +78,8 @@ export default function LoginDashboard() {
   }
 
   useEffect(() => {
-    const callFn = () => {
-      serviceLogin
+    const callFn = async() => {
+      await serviceLogin
         .loginRequest()
         .then(data => {
           setDatas(data)
@@ -108,6 +108,7 @@ export default function LoginDashboard() {
       await serviceLogin
         .statusRequest(statusData)
         .then((data) => {
+          console.log(data)
           setResponse(data)
           setMessage("Welcome ADMIN !")
         })

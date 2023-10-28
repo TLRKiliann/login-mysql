@@ -74,11 +74,11 @@ const Login:React.FC = () => {
   }
 
   useEffect(() => {
-    const callFn = () => {
-      serviceLogin
-      .loginRequest()
-      .then(data => {
-        setDatas(data)
+    const callFn = async() => {
+      await serviceLogin
+        .loginRequest()
+        .then(data => {
+          setDatas(data)
       })
       .catch((err) => {
         console.log("Error during catching of login data !", err.message)
